@@ -1,5 +1,6 @@
-import axios from 'axios';
 import React, { useState, useEffect, createContext } from 'react';
+import api from '../api';
+import.meta.env.VITE_BASE_URL
 
 export const UserContext = createContext();
 
@@ -16,8 +17,8 @@ export const UserProvider = ({ children }) => {
 const geminiResponse = async (command) => {
   try {
     console.log(command);
-    const response = await axios.post(
-      "http://localhost:5000/assistant",
+    const response = await api.post(
+      "/assistant",
       { command }, 
       { withCredentials: true }
     );

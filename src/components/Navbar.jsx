@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import.meta.env.VITE_BASE_URL
+
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { UserContext } from '../context/UserContext';
-import axios from 'axios';
 import Cookies from 'js-cookie';
+import api from '../api';
 
 const Navbar = ({ onStopListening }) => {
   const { user, setUser } = useContext(UserContext);
@@ -18,7 +20,7 @@ const Navbar = ({ onStopListening }) => {
     }
     
     try {
-      await axios.get("http://localhost:5000/logout", {
+      await api.get("/logout", {
         withCredentials: true,
       });
       Cookies.remove("token");
