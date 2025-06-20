@@ -17,6 +17,8 @@ const Home = () => {
   const recognitionRef = useRef(null);
   const restartTimeoutRef = useRef(null);
   const isManualStopRef = useRef(false);
+  const lastSpeechTimeRef = useRef(null);
+
   
   const token = localStorage.getItem("token");
 
@@ -231,7 +233,7 @@ const Home = () => {
 
     recognition.onstart = () => {
       setConnectionStatus("connected");
-      lastSpeechTime = Date.now();
+      lastSpeechTimeRef.current = Date.now();
     };
 
     recognition.onresult = (event) => {
@@ -250,14 +252,14 @@ const Home = () => {
       // Show interim results
       if (interimTranscript) {
         setSpeechText(interimTranscript);
-        lastSpeechTime = Date.now();
+        lastSpeechTimeRef.current = Date.now();
       }
 
       // Process final results
       if (finalTranscript.trim() !== "") {
         clearTimeout(silenceTimer);
         processSpeechInput(finalTranscript.trim());
-        lastSpeechTime = Date.now();
+        lastSpeechTimeRef.current = Date.now();
       }
     };
 
