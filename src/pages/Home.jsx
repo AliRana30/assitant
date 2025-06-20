@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState, useRef } from "react";
 import { UserContext } from "../context/UserContext";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
-import axios from "axios";
 
 const Home = () => {
   const { user, setUser, frontendImage, geminiResponse, history,setHistory ,selectedImage} = useContext(UserContext);

@@ -56,10 +56,10 @@ const Navbar = ({ onStopListening }) => {
             onClick={handleHome}
           >
             <div className="w-9 h-9 bg-gradient-to-r from-purple-600 to-blue-600 rounded-lg flex items-center justify-center shadow-lg">
-              <span className="text-white font-bold text-sm">AI</span>
+              <span className="text-white font-bold text-sm">PR</span>
             </div>
             <h1 className="text-xl font-semibold text-white">
-              AI Assistant Hub
+            Promptly
             </h1>
           </div>
           

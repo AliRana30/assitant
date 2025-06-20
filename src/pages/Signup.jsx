@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { Mail, Lock, User, Eye, EyeOff, Github, Twitter, Phone, Calendar } from 'lucide-react';
-import axios from 'axios';
+import.meta.env.VITE_BASE_URL
+
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useContext } from 'react';
 import { UserContext } from '../context/UserContext';
+import api from '../api';
 
 const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -85,7 +87,7 @@ const Signup = () => {
 
     if (Object.keys(newErrors).length === 0) {
         try {
-            const response = await axios.post(`http://localhost:5000/signup`, {
+            const response = await api.post('/signup', {
                 name: `${formData.name} ${formData.lastName}`,
                 email: formData.email,
                 password: formData.password,

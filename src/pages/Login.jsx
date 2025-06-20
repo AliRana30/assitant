@@ -1,10 +1,13 @@
 import React, { useState, useContext } from 'react';
+import.meta.env.VITE_BASE_URL
+
 import { Mail, Lock, Eye, EyeOff } from 'lucide-react';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import { UserContext } from '../context/UserContext';
+import api from '../api';
 
 const LoginComponent = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -26,7 +29,7 @@ const LoginComponent = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`http://localhost:5000/login`, {
+      const response = await api.post(`/login`, {
         name: formData.firstName,
         email: formData.email,
         password: formData.password,
