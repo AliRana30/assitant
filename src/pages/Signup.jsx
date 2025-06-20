@@ -110,12 +110,9 @@ const Signup = () => {
     }
   };
 
-  const handleSocialSignup = (provider) => {
-    console.log(`${provider} signup clicked`);
-  };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800 flex items-center justify-center p-4">
       <div className="w-full max-w-md bg-white/10 backdrop-blur-md rounded-lg shadow-lg p-6">
         {/* Header */}
         <div className="text-center mb-6">
