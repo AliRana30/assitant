@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Mail, Lock, User, Eye, EyeOff, Github, Twitter, Phone, Calendar } from 'lucide-react';
+import { Mail, Lock, User, Eye, EyeOff, Phone, Calendar } from 'lucide-react';
 
 const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -69,20 +69,37 @@ const Signup = () => {
     return newErrors;
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     const newErrors = validateForm();
 
     if (Object.keys(newErrors).length === 0) {
         try {
-            // Simulated API call
+            // Simulated successful signup
             console.log('Signup data:', {
                 name: `${formData.name} ${formData.lastName}`,
                 email: formData.email,
                 password: formData.password,
+                phone: formData.phone,
+                dateOfBirth: formData.dateOfBirth,
+                agreeToMarketing: formData.agreeToMarketing
             });
-            alert('Signup successful!');
+            
+            // Reset form
+            setFormData({
+                name: '',
+                lastName: '',
+                email: '',
+                phone: '',
+                dateOfBirth: '',
+                password: '',
+                confirmPassword: '',
+                agreeToTerms: false,
+                agreeToMarketing: false
+            });
+            
+            alert('Account created successfully!');
         } catch (error) {
             console.error('Signup error:', error);
             alert('Signup failed. Please try again.');
@@ -90,10 +107,6 @@ const Signup = () => {
     } else {
         setErrors(newErrors);
     }
-  };
-
-  const handleSocialSignup = (provider) => {
-    console.log(`${provider} signup clicked`);
   };
 
   return (
@@ -111,7 +124,7 @@ const Signup = () => {
           </div>
 
           {/* Signup Form */}
-          <form onSubmit={handleSubmit}>
+          <div>
             <div className="space-y-6">
               {/* Name fields */}
               <div className="grid grid-cols-2 gap-4">
@@ -317,43 +330,12 @@ const Signup = () => {
               {/* Submit button */}
               <button
                 type="submit"
+                onClick={handleSubmit}
                 className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-800 transition-colors duration-200"
               >
                 Create Account
               </button>
             </div>
-          </form>
-
-          {/* Divider */}
-          <div className="mt-8">
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-600" />
-              </div>
-              <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-gray-800 text-gray-400">Or sign up with</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Social signup buttons */}
-          <div className="mt-6 grid grid-cols-2 gap-3">
-            <button
-              type="button"
-              onClick={() => handleSocialSignup('GitHub')}
-              className="w-full inline-flex justify-center py-3 px-4 rounded-lg border border-gray-600 bg-gray-700 text-white hover:bg-gray-600 transition-colors duration-200"
-            >
-              <Github className="h-5 w-5" />
-              <span className="ml-2 text-sm">GitHub</span>
-            </button>
-            <button
-              type="button"
-              onClick={() => handleSocialSignup('Twitter')}
-              className="w-full inline-flex justify-center py-3 px-4 rounded-lg border border-gray-600 bg-gray-700 text-white hover:bg-gray-600 transition-colors duration-200"
-            >
-              <Twitter className="h-5 w-5" />
-              <span className="ml-2 text-sm">Twitter</span>
-            </button>
           </div>
 
           {/* Sign in link */}
