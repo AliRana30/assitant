@@ -16,17 +16,19 @@ export const UserProvider = ({ children }) => {
 // get gemini 
 const geminiResponse = async (command) => {
   try {
-    console.log(command);
     const response = await api.post(
       "/assistant",
-      { command }, 
+      { command },
       { withCredentials: true }
     );
     return response.data;
   } catch (err) {
-    console.error("Failed to get gemini", err);
+    const msg = err.response?.data?.error || err.message;
+    console.error("Failed to get gemini:", msg);
+    return { response: "Error: " + msg };
   }
 };
+
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
