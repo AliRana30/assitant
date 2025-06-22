@@ -62,7 +62,7 @@ const Customize2 = () => {
 
       // Use the same URL pattern as signup/login
       const baseURL = import.meta.env.VITE_BASE_URL || 'https://backend-production-35a0.up.railway.app';
-      const apiUrl = import.meta.env.DEV ?  `${baseURL}/update` : '/update'; 
+      const apiUrl = import.meta.env.DEV ? '/api/update' : `${baseURL}/update`;
 
       console.log('Making request to:', apiUrl);
       console.log('With token:', token.substring(0, 20) + '...');
@@ -80,8 +80,14 @@ const Customize2 = () => {
       console.log('Response status:', response.status);
       console.log('Response headers:', Object.fromEntries(response.headers.entries()));
 
-      const data = await response.json();
-      console.log('Update response:', data);
+      let data;
+try {
+  data = await response.json();
+} catch (err) {
+  console.error("❌ Failed to parse JSON:", err);
+  throw new Error('Unexpected server response. Please try again.');
+}
+
 
       if (!response.ok) {
         if (response.status === 401) {
