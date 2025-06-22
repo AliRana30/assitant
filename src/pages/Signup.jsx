@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { Mail, Lock, User, Eye, EyeOff, Github, Twitter, Phone, Calendar } from 'lucide-react';
 import.meta.env.VITE_BASE_URL
+import React, { useState } from 'react';
+import {  Eye, EyeOff } from 'lucide-react';
 
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -82,37 +82,43 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     const newErrors = validateForm();
-
+  
     if (Object.keys(newErrors).length === 0) {
-        try {
-            const response = await api.post('/signup', {
-                name: `${formData.name} ${formData.lastName}`,
-                email: formData.email,
-                password: formData.password,
-            },{withCredentials: true});
-       
-            setUser(response.data.user);
-            console.log('Signup successful:', response.data);
-            toast.success('Signup successful!');
-            navigate('/login'); 
-        } catch (error) {
-            if (error.response && error.response.data && error.response.data.error) {
-                toast.error('Signup failed: ' + error.response.data.error);
-            } else {
-                console.error('Signup error:', error);
-                toast.error('Signup failed. Please try again.');
-            }
+      try {
+        const response = await api.post('/signup', {
+          name: `${formData.name} ${formData.lastName}`,
+          email: formData.email,
+          password: formData.password,
+          phone: formData.phone,
+          dateOfBirth: formData.dateOfBirth,
+        });
+  
+        if (response.data?.user) {
+          setUser(response.data.user);
+          console.log('Signup successful:', response.data);
+          toast.success('Signup successful!');
+          navigate('/login');
+        } else {
+          toast.error('Signup failed: no user returned');
         }
+      } catch (error) {
+        console.error('Signup error:', error?.response?.data || error.message);
+        toast.error('Signup failed. Please check your console.');
+      }
     } else {
-        setErrors(newErrors);
+      setErrors(newErrors);
     }
   };
+  
 
+  const handleSocialSignup = (provider) => {
+    console.log(`${provider} signup clicked`);
+  };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-800 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 flex items-center justify-center p-4">
       <div className="w-full max-w-md bg-white/10 backdrop-blur-md rounded-lg shadow-lg p-6">
         {/* Header */}
         <div className="text-center mb-6">
@@ -169,6 +175,7 @@ const Signup = () => {
               onChange={handleInputChange}
               className="block w-full px-4 py-2 border border-gray-600 bg-gray-800 text-white rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
               placeholder="Password"
+              autoComplete="new-password"
               required
             />
             <button
@@ -188,6 +195,7 @@ const Signup = () => {
               onChange={handleInputChange}
               className="block w-full px-4 py-2 border border-gray-600 bg-gray-800 text-white rounded-md placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
               placeholder="Confirm Password"
+              
               required
             />
             <button
