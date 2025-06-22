@@ -36,7 +36,7 @@ const Customize2 = () => {
     formData.append("assistantImage", file); 
 
     
-    const response = await api.post("/update", formData, {
+    const response = await api.post(`/update`, formData, {
       withCredentials: true,
       headers: {
         "Content-Type": "multipart/form-data",

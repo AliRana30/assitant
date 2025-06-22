@@ -87,7 +87,7 @@ const Signup = () => {
   
     if (Object.keys(newErrors).length === 0) {
       try {
-        const response = await api.post('/signup', {
+        const response = await api.post(`/signup`, {
           name: `${formData.name} ${formData.lastName}`,
           email: formData.email,
           password: formData.password,
